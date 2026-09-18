@@ -45,6 +45,13 @@ Buat application key:
 php artisan key:generate
 ```
 
+Buat symbolic link agar foto karyawan yang disimpan pada disk public dapat
+ditampilkan oleh aplikasi:
+
+```bash
+php artisan storage:link
+```
+
 ### 3. Siapkan database MySQL
 
 Buat database kosong, misalnya dengan nama `hris`:

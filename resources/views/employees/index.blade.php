@@ -17,10 +17,10 @@
         </form>
         @if(session('status'))<div class="alert alert-success">{{ session('status') }}</div>@endif
         <div class="table-responsive"><table class="table align-middle">
-            <thead><tr><th>ID</th><th>Nama</th><th>Departemen</th><th>Jabatan</th><th>Status</th><th></th></tr></thead>
+            <thead><tr><th>NIP</th><th>Nama</th><th>Departemen</th><th>Jabatan</th><th>Status</th><th></th></tr></thead>
             <tbody>
             @forelse($employees as $employee)
-                <tr><td>{{ $employee->employee_number }}</td><td>{{ trim($employee->first_name.' '.$employee->last_name) }}</td><td>{{ $employee->department?->name ?? '-' }}</td><td>{{ $employee->position?->name ?? '-' }}</td><td><span class="badge text-bg-{{ $employee->employment_status === 'active' ? 'success' : 'secondary' }}">{{ ucfirst($employee->employment_status) }}</span></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ route('employees.show', $employee) }}">Lihat</a> <a class="btn btn-sm btn-outline-secondary" href="{{ route('employees.edit', $employee) }}">Edit</a></td></tr>
+                <tr><td>{{ $employee->nip }}</td><td>{{ trim($employee->first_name.' '.$employee->last_name) }}</td><td>{{ $employee->department?->name ?? '-' }}</td><td>{{ $employee->position?->name ?? '-' }}</td><td><span class="badge text-bg-{{ $employee->employment_status === 'active' ? 'success' : 'secondary' }}">{{ ucfirst($employee->employment_status) }}</span></td><td class="text-end"><a class="btn btn-sm btn-outline-primary" href="{{ route('employees.show', $employee) }}">Lihat</a> <a class="btn btn-sm btn-outline-secondary" href="{{ route('employees.edit', $employee) }}">Edit</a></td></tr>
             @empty
                 <tr><td colspan="6" class="text-center text-muted py-4">Tidak ada karyawan.</td></tr>
             @endforelse
