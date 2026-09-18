@@ -25,11 +25,12 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
-    Route::middleware('permission:employee.view')->group(function () {
-        Route::resource('employees', EmployeeController::class)->only(['index', 'show']);
-    });
     Route::middleware('permission:employee.create')->group(function () {
         Route::resource('employees', EmployeeController::class)->only(['create', 'store']);
+    });
+    Route::middleware('permission:employee.view')->group(function () {
+        Route::resource('employees', EmployeeController::class)->only(['index', 'show']);
+        Route::get('/employees/{employee}/documents/{document}', [EmployeeController::class, 'downloadDocument'])->name('employees.documents.download');
     });
     Route::middleware('permission:employee.update')->group(function () {
         Route::resource('employees', EmployeeController::class)->only(['edit', 'update']);

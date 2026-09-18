@@ -25,6 +25,26 @@ class Employee extends Model
         return $this->belongsTo(Position::class);
     }
 
+    public function families()
+    {
+        return $this->hasMany(EmployeeFamily::class);
+    }
+
+    public function educations()
+    {
+        return $this->hasMany(EmployeeEducation::class);
+    }
+
+    public function experiences()
+    {
+        return $this->hasMany(EmployeeExperience::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(EmployeeDocument::class)->whereNull('deleted_at');
+    }
+
     protected function casts(): array
     {
         return [
