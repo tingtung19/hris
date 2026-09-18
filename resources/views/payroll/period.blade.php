@@ -1,0 +1,7 @@
+@extends('layouts.app')
+@section('title',$period->name)
+@section('content')
+<h1 class="h3">{{ $period->name }}</h1><p>{{ $period->start_date }} - {{ $period->end_date }} | {{ ucfirst($period->status) }}</p>@if(session('status'))<div class="alert alert-success">{{ session('status') }}</div>@endif
+<div class="d-flex gap-2 mb-3"><form method="POST" action="{{ route('payroll.generate',$period->id) }}">@csrf<button class="btn btn-primary">Generate</button></form>@foreach(['approved','paid','locked'] as $status)<form method="POST" action="{{ route('payroll.transition',[$period->id,$status]) }}">@csrf<button class="btn btn-outline-secondary">{{ ucfirst($status) }}</button></form>@endforeach</div>
+<div class="card shadow-sm"><div class="card-body"><table class="table"><thead><tr><th>Karyawan</th><th>Gross</th><th>Potongan</th><th>Net</th><th>Status</th><th></th></tr></thead><tbody>@forelse($payrolls as $row)<tr><td>{{ $row->employee_number }} - {{ $row->first_name }} {{ $row->last_name }}</td><td>Rp {{ number_format($row->gross_salary,0,',','.') }}</td><td>Rp {{ number_format($row->total_deduction,0,',','.') }}</td><td>Rp {{ number_format($row->net_salary,0,',','.') }}</td><td>{{ ucfirst($row->status) }}</td><td>@if(in_array($row->status,['paid','locked']))<a href="{{ route('payroll.payslip',$row->id) }}">Slip</a>@endif</td></tr>@empty<tr><td colspan="6" class="text-muted text-center">Belum ada payroll.</td></tr>@endforelse</tbody></table></div></div>
+@endsection
