@@ -1,0 +1,7 @@
+@extends('layouts.app')
+@section('title','Koreksi Absensi')
+@section('content')
+<h1 class="h3 mb-3">Koreksi Absensi</h1>@if(session('status'))<div class="alert alert-success">{{ session('status') }}</div>@endif
+<div class="card shadow-sm mb-3"><div class="card-body"><form method="POST" action="{{ route('attendance.corrections.store') }}" class="row g-2">@csrf<div class="col-md-3"><input type="date" name="date" class="form-control" required></div><div class="col-md-2"><input type="time" name="requested_clock_in" class="form-control"></div><div class="col-md-2"><input type="time" name="requested_clock_out" class="form-control"></div><div class="col-md-3"><input name="reason" class="form-control" placeholder="Alasan" required></div><div class="col-md-2"><button class="btn btn-primary w-100">Ajukan</button></div></form></div></div>
+<div class="card shadow-sm"><div class="card-body"><table class="table"><thead><tr><th>Tanggal</th><th>Clock in</th><th>Clock out</th><th>Alasan</th><th>Status</th></tr></thead><tbody>@forelse($corrections as $row)<tr><td>{{ $row->date }}</td><td>{{ $row->requested_clock_in ?? '-' }}</td><td>{{ $row->requested_clock_out ?? '-' }}</td><td>{{ $row->reason }}</td><td>{{ ucfirst($row->status) }}</td></tr>@empty<tr><td colspan="5" class="text-center text-muted">Belum ada koreksi.</td></tr>@endforelse</tbody></table>{{ $corrections->links() }}</div></div>
+@endsection
